@@ -1,26 +1,266 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --navy-950: #07111f;
+  --navy-900: #0c1b33;
+  --navy-800: #16304d;
+  --navy-700: #1e4468;
+  --indigo-700: #2439b0;
+  --indigo-600: #3451d1;
+  --cyan-300: #8eebff;
+  --cyan-400: #3fd4f5;
+  --cyan-500: #0b8eaf;
+  --ink: #102033;
+  --muted: #3e5168;
+  --line: #e3ebf4;
+  --surface: #f4f7fb;
+  --paper: #ffffff;
+  --danger: #9f2c2c;
+  --success: #0f6e56;
+  --header-offset: 5.5rem;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-navy-950: var(--navy-950);
+  --color-navy-900: var(--navy-900);
+  --color-navy-800: var(--navy-800);
+  --color-navy-700: var(--navy-700);
+  --color-indigo-700: var(--indigo-700);
+  --color-indigo-600: var(--indigo-600);
+  --color-cyan-300: var(--cyan-300);
+  --color-cyan-400: var(--cyan-400);
+  --color-cyan-500: var(--cyan-500);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-surface: var(--surface);
+  --color-paper: var(--paper);
+  --color-danger: var(--danger);
+  --color-success: var(--success);
+  --font-sans: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, SFMono-Regular, monospace;
+  --shadow-soft: 0 16px 40px -28px rgb(12 27 51 / 0.55);
+  --shadow-card: 0 24px 60px -32px rgb(12 27 51 / 0.45);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+  color-scheme: light;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  text-rendering: optimizeLegibility;
+}
+
+html,
+body {
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+::selection {
+  background: #d7f4ff;
+  color: var(--navy-900);
+}
+
+:focus-visible {
+  outline: 2px solid var(--cyan-500);
+  outline-offset: 3px;
+}
+
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -4rem;
+  z-index: 80;
+  border-radius: 999px;
+  background: var(--navy-900);
+  color: white;
+  padding: 0.7rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.skip-link:focus {
+  top: 1rem;
+}
+
+.section-anchor {
+  scroll-margin-top: var(--header-offset);
+}
+
+.hero-glow {
+  background:
+    radial-gradient(900px 520px at 88% 8%, rgb(63 212 245 / 0.18), transparent 58%),
+    radial-gradient(680px 420px at 0% 90%, rgb(52 81 209 / 0.1), transparent 55%),
+    linear-gradient(#f8fbfe, #ffffff 72%);
+}
+
+.grid-fade {
+  background-image:
+    linear-gradient(to right, rgb(16 32 51 / 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(16 32 51 / 0.045) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse at 70% 40%, black 10%, transparent 72%);
+}
+
+.cta-glow {
+  background:
+    radial-gradient(520px 240px at 15% 0%, rgb(63 212 245 / 0.22), transparent 60%),
+    radial-gradient(480px 260px at 100% 100%, rgb(52 81 209 / 0.35), transparent 55%),
+    var(--navy-900);
+}
+
+.code-line {
+  opacity: 0;
+  animation: line-in 0.45s ease forwards;
+}
+
+.caret {
+  display: inline-block;
+  width: 0.45rem;
+  height: 0.95em;
+  margin-left: 1px;
+  transform: translateY(2px);
+  background: var(--cyan-300);
+  animation: blink 1.05s steps(1) infinite;
+}
+
+.float-slow {
+  animation: float-y 7.5s ease-in-out infinite;
+}
+
+.menu-in {
+  animation: menu-in 0.28s ease;
+}
+
+.line-y {
+  transform-origin: top;
+}
+
+.line-x {
+  transform-origin: left;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .reveal {
+      animation: rise linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 24%;
+    }
+
+    .line-y {
+      animation: grow-y linear both;
+      animation-timeline: view();
+      animation-range: entry 8% cover 42%;
+    }
+
+    .line-x {
+      animation: grow-x linear both;
+      animation-timeline: view();
+      animation-range: entry 8% cover 42%;
+    }
+  }
+}
+
+@keyframes line-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes blink {
+  0%,
+  45% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes float-y {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes menu-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes grow-y {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes grow-x {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .code-line,
+  .caret,
+  .float-slow,
+  .reveal,
+  .line-y,
+  .line-x {
+    animation: none !important;
+    opacity: 1;
+    transform: none;
+  }
 }
